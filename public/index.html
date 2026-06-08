@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#060810" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>MultiGames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-logo">
+    <span class="logo-bracket">[</span><span class="logo-multi">MULTI</span><span class="logo-games">GAMES</span><span class="logo-bracket">]</span>
+  </div>
+  <div class="status-badge">
+    <div id="status-dot" class="status-dot"></div>
+    <span id="status-text">Connexion…</span>
+  </div>
+</header>
+
+<main>
+  <div class="view-container">
+
+    <div id="error-msg" class="hidden"></div>
+
+    <!-- ── Vue : Lobby ───────────────────────────────────── -->
+    <div data-view="lobby">
+
+      <!-- Hero -->
+      <div class="hub-hero">
+        <div>
+          <p class="hub-eyebrow">PLATEFORME MULTIJOUEUR</p>
+          <h1 class="hub-title">Choisissez votre jeu</h1>
+        </div>
+        <input id="input-name"
+               class="input-field hub-name-input"
+               type="text"
+               placeholder="Pseudo (optionnel)"
+               maxlength="20" />
+      </div>
+
+      <!-- Sélection du jeu -->
+      <div class="hub-section">
+        <div class="hub-label"><span class="hub-step">01</span> Sélectionner un jeu</div>
+        <div id="game-picker" class="game-picker"></div>
+      </div>
+
+      <!-- Créer + Rejoindre -->
+      <div class="hub-section hub-actions-section">
+        <div class="hub-label"><span class="hub-step">02</span> Créer ou rejoindre</div>
+        <div class="hub-actions">
+
+          <div class="hub-card">
+            <div class="hub-card-label">NOUVELLE PARTIE</div>
+            <select id="select-config" class="input-field"></select>
+            <button id="btn-create" class="btn-primary btn-block">Créer →</button>
+          </div>
+
+          <div class="hub-divider"></div>
+
+          <div class="hub-card">
+            <div class="hub-card-label">REJOINDRE PAR CODE</div>
+            <input id="input-room-id"
+                   class="input-field code-input"
+                   type="text"
+                   placeholder="CODE DU SALON"
+                   maxlength="8"
+                   autocomplete="off"
+                   spellcheck="false" />
+            <button id="btn-join" class="btn-secondary btn-block">Rejoindre →</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Salons ouverts -->
+      <div class="hub-section">
+        <div class="hub-label">
+          <span class="hub-step">03</span> Salons ouverts
+          <button id="btn-browse" class="btn-icon">↺</button>
+        </div>
+        <div id="room-list" class="room-list"><p class="empty">Appuyez sur ↺ pour actualiser</p></div>
+      </div>
+
+    </div><!-- /lobby -->
+
+    <!-- ── Vue : Room ────────────────────────────────────── -->
+    <div data-view="room" class="hidden">
+
+      <!-- Salle d'attente -->
+      <div id="waiting-area" class="card">
+        <div class="wait-header">
+          <div class="wait-title">
+            <span id="room-game-icon" class="wait-game-icon"></span>
+            <h2 id="room-title">Salon</h2>
+          </div>
+          <span id="room-config" class="mode-badge"></span>
+        </div>
+
+        <div class="code-box">
+          <div class="code-box-label">CODE DU SALON</div>
+          <div class="code-box-value">
+            <span id="room-code" class="code-display"></span>
+            <button id="btn-copy-code" class="btn-copy">Copier</button>
+          </div>
+          <div class="code-box-hint">Partagez ce code pour inviter un adversaire</div>
+        </div>
+
+        <div class="wait-players">
+          <div class="wait-players-header">
+            <span class="wait-players-label">Joueurs</span>
+            <span id="room-count" class="wait-count">0/0</span>
+          </div>
+          <ul id="room-players" class="players-list"></ul>
+        </div>
+
+        <p class="wait-auto">La partie démarre automatiquement quand le salon est plein.</p>
+        <button id="btn-leave-room" class="btn-danger btn-block" style="margin-top:1rem">Quitter le salon</button>
+      </div>
+
+      <!-- Zone de jeu -->
+      <div id="game-area" class="card hidden">
+        <div class="game-area-header">
+          <h2 id="room-title-game">Partie en cours</h2>
+          <button id="btn-leave-room-2" class="btn-danger" style="font-size:.8rem;padding:.35rem .75rem">
+            Abandonner
+          </button>
+        </div>
+        <div id="game-container"></div>
+      </div>
+
+    </div><!-- /room -->
+
+  </div>
+</main>
+
+<script src="/js/shared.js"></script>
+<script src="/js/engine/GameClient.js"></script>
+<script src="/js/engine/BaseGameView.js"></script>
+<script src="/js/engine/UIManager.js"></script>
+<script src="/js/games/TicTacToeView.js"></script>
+<script src="/js/games/PoisonedChaliceView.js"></script>
+<script src="/js/games/VisualEchoView.js"></script>
+<script src="/js/games/MazeDuelView.js"></script>
+<script src="/js/app.js"></script>
+
+</body>
+</html>
